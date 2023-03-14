@@ -24,7 +24,6 @@ import org.gradle.api.java.archives.Attributes;
 import org.gradle.api.java.archives.internal.DefaultManifest;
 import org.gradle.internal.Factory;
 import org.gradle.internal.UncheckedException;
-import org.gradle.util.WrapUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,7 +69,9 @@ public class DefaultOsgiManifest extends DefaultManifest implements OsgiManifest
             Manifest osgiManifest = analyzer.calcManifest();
             java.util.jar.Attributes attributes = osgiManifest.getMainAttributes();
             for (Map.Entry<Object, Object> entry : attributes.entrySet()) {
-                effectiveManifest.attributes(WrapUtil.toMap(entry.getKey().toString(), (String) entry.getValue()));
+                final Map<String, String> map = new HashMap<>();
+                map.put(entry.getKey().toString(), (String) entry.getValue());
+                effectiveManifest.attributes(map);
             }
             effectiveManifest.attributes(this.getAttributes());
             for (Map.Entry<String, Attributes> ent : getSections().entrySet()) {
