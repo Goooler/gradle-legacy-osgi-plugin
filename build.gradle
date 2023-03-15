@@ -8,8 +8,8 @@ repositories {
     mavenCentral()
 }
 
-group 'com.github.blindpirate'
-version '0.0.6'
+group 'io.github.goooler'
+version '0.8.0'
 
 java {
     sourceCompatibility = '1.8'
@@ -28,15 +28,15 @@ dependencies {
 }
 
 gradlePlugin {
-    website = 'https://github.com/blindpirate/gradle-legacy-osgi-plugin'
-    vcsUrl = 'https://github.com/blindpirate/gradle-legacy-osgi-plugin'
+    website = 'https://github.com/Goooler/gradle-legacy-osgi-plugin'
+    vcsUrl = 'https://github.com/Goooler/gradle-legacy-osgi-plugin'
 
     plugins {
         osgiPlugin {
-            id = 'com.github.blindpirate.osgi'
+            id = 'io.github.goooler.osgi'
             implementationClass = "com.github.blindpirate.osgi.plugins.osgi.OsgiPlugin"
             displayName = 'A legacy osgi plugin in Gradle 5'
-            description = 'A legacy osgi plugin in Gradle 5'
+            description = 'A fork of https://github.com/blindpirate/gradle-legacy-osgi-plugin'
             tags.set(['legacy', 'osgi'])
         }
     }
