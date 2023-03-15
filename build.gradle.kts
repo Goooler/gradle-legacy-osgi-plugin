@@ -1,15 +1,11 @@
 plugins {
-    id("java-library")
-    id("groovy")
+    `java-library`
+    groovy
     id("com.gradle.plugin-publish") version "1.1.0"
 }
 
 group = "io.github.goooler"
 version = "0.8.1-SNAPSHOT"
-
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
-}
 
 dependencies {
     api(gradleApi())
@@ -20,6 +16,10 @@ dependencies {
     testImplementation("net.bytebuddy:byte-buddy:1.14.2")
     testImplementation(platform("org.junit:junit-bom:5.9.2"))
     testImplementation("org.junit.vintage:junit-vintage-engine")
+}
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 }
 
 gradlePlugin {
@@ -37,12 +37,9 @@ gradlePlugin {
     }
 }
 
-tasks.named("publishPlugins") {
-    notCompatibleWithConfigurationCache("https://github.com/gradle/gradle/issues/21283")
-}
-
 tasks.publishPlugins.configure {
-    dependsOn("test")
+    notCompatibleWithConfigurationCache("https://github.com/gradle/gradle/issues/21283")
+    dependsOn(tasks.test)
 }
 
 tasks.test {
