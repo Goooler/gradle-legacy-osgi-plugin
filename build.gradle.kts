@@ -4,10 +4,6 @@ plugins {
     id("com.gradle.plugin-publish") version "1.1.0"
 }
 
-repositories {
-    mavenCentral()
-}
-
 group = "io.github.goooler"
 version = "0.8.1-SNAPSHOT"
 
