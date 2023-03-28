@@ -13,7 +13,7 @@ dependencies {
     api("biz.aQute.bnd:biz.aQute.bndlib:6.4.0")
 
     testImplementation("org.spockframework:spock-core:2.3-groovy-3.0")
-    testImplementation("net.bytebuddy:byte-buddy:1.14.2")
+    testImplementation("net.bytebuddy:byte-buddy:1.14.3")
     testImplementation(platform("org.junit:junit-bom:5.9.2"))
     testImplementation("org.junit.vintage:junit-vintage-engine")
 }
