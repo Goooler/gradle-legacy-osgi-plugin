@@ -15,7 +15,7 @@ java {
 dependencies {
     api(gradleApi())
     api(localGroovy())
-    api("biz.aQute.bnd:biz.aQute.bndlib:6.4.1")
+    api("biz.aQute.bnd:biz.aQute.bndlib:7.0.0")
 
     testImplementation("org.spockframework:spock-core:2.3-groovy-3.0")
     testImplementation("net.bytebuddy:byte-buddy:1.14.8")
