@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.github.goooler"
-version = "0.8.1-SNAPSHOT"
+version = "0.8.1"
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(8)
