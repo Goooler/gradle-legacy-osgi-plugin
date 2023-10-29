@@ -17,24 +17,23 @@ package com.github.blindpirate.osgi.internal.plugins.osgi;
 
 import aQute.bnd.osgi.Analyzer;
 import com.github.blindpirate.osgi.plugins.osgi.OsgiManifest;
-import org.apache.tools.ant.util.StringUtils;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.internal.file.FileResolver;
 import org.gradle.api.java.archives.Attributes;
 import org.gradle.api.java.archives.internal.DefaultManifest;
 import org.gradle.internal.Factory;
 import org.gradle.internal.UncheckedException;
+import org.gradle.util.internal.CollectionUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.jar.Manifest;
-import java.util.stream.Collectors;
 
 public class DefaultOsgiManifest extends DefaultManifest implements OsgiManifest {
 
     // Because these properties can be convention mapped we need special handling in here.
-    // If you add another one of these “modelled” properties, you need to update:
+    // If you add another one of these "modelled" properties, you need to update:
     // - maybeAppendModelledInstruction()
     // - maybePrependModelledInstruction()
     // - maybeSetModelledInstruction()
@@ -69,9 +68,9 @@ public class DefaultOsgiManifest extends DefaultManifest implements OsgiManifest
             Manifest osgiManifest = analyzer.calcManifest();
             java.util.jar.Attributes attributes = osgiManifest.getMainAttributes();
             for (Map.Entry<Object, Object> entry : attributes.entrySet()) {
-                final Map<String, String> map = new HashMap<>();
-                map.put(entry.getKey().toString(), (String) entry.getValue());
-                effectiveManifest.attributes(map);
+                final Map<String, String> newMap = new HashMap<>();
+                newMap.put(entry.getKey().toString(), (String) entry.getValue());
+                effectiveManifest.attributes(newMap);
             }
             effectiveManifest.attributes(this.getAttributes());
             for (Map.Entry<String, Attributes> ent : getSections().entrySet()) {
@@ -104,13 +103,13 @@ public class DefaultOsgiManifest extends DefaultManifest implements OsgiManifest
             analyzer.setProperty(Analyzer.IMPORT_PACKAGE,
                     "*, !org.apache.ant.*, !org.junit.*, !org.jmock.*, !org.easymock.*, !org.mockito.*");
         }
-        if (!instructionNames.contains(Analyzer.BUNDLE_VERSION)) {
+        if(!instructionNames.contains(Analyzer.BUNDLE_VERSION)){
             analyzer.setProperty(Analyzer.BUNDLE_VERSION, getVersion());
         }
-        if (!instructionNames.contains(Analyzer.BUNDLE_NAME)) {
+        if(!instructionNames.contains(Analyzer.BUNDLE_NAME)){
             analyzer.setProperty(Analyzer.BUNDLE_NAME, getName());
         }
-        if (!instructionNames.contains(Analyzer.BUNDLE_SYMBOLICNAME)) {
+        if(!instructionNames.contains(Analyzer.BUNDLE_SYMBOLICNAME)){
             analyzer.setProperty(Analyzer.BUNDLE_SYMBOLICNAME, getSymbolicName());
         }
         if (!instructionNames.contains(Analyzer.EXPORT_PACKAGE)) {
@@ -118,7 +117,7 @@ public class DefaultOsgiManifest extends DefaultManifest implements OsgiManifest
         }
         for (String instructionName : instructionNames) {
             String list = createPropertyStringFromList(instructionValue(instructionName));
-            if (list != null && list.length() > 0) {
+            if (list != null && !list.isEmpty()) {
                 analyzer.setProperty(instructionName, list);
             }
         }
@@ -302,11 +301,11 @@ public class DefaultOsgiManifest extends DefaultManifest implements OsgiManifest
     }
 
     private String createPropertyStringFromList(List<String> valueList) {
-        return valueList == null || valueList.isEmpty() ? null : StringUtils.join(valueList, ",");
+        return valueList == null || valueList.isEmpty() ? null : CollectionUtils.join(",", valueList);
     }
 
     private List<String> createListFromPropertyString(String propertyString) {
-        return propertyString == null || propertyString.length() == 0 ? null : new LinkedList<>(Arrays.asList(propertyString.split(",")));
+        return propertyString == null || propertyString.isEmpty() ? null : new LinkedList<>(Arrays.asList(propertyString.split(",")));
     }
 
     private Map<String, List<String>> getModelledInstructions() {
@@ -319,9 +318,7 @@ public class DefaultOsgiManifest extends DefaultManifest implements OsgiManifest
         modelledInstructions.put(Analyzer.BUNDLE_VENDOR, createListFromPropertyString(vendor));
         modelledInstructions.put(Analyzer.BUNDLE_DOCURL, createListFromPropertyString(docURL));
 
-        return modelledInstructions.entrySet().stream()
-                .filter(element -> element.getValue() != null)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return CollectionUtils.filter(modelledInstructions, element -> element.getValue() != null);
     }
 
     @Override

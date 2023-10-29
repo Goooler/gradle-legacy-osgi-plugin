@@ -76,7 +76,7 @@ public class OsgiExtension {
      * @param closure the closure to configure the created OsgiManifest instance
      * @return the created OsgiManifest instance
      */
-    public OsgiManifest osgiManifest(Closure closure) {
+    public OsgiManifest osgiManifest(Closure<?> closure) {
         OsgiManifest manifest = createDefaultOsgiManifest();
         project.configure(manifest, closure);
         return manifest;

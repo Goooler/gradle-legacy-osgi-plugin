@@ -1,19 +1,18 @@
 pluginManagement {
     repositories {
-        gradlePluginPortal()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
-        gradlePluginPortal()
     }
 }
 
 plugins {
-    id("com.gradle.enterprise") version "3.13.3"
+    `gradle-enterprise`
 }
 
 gradleEnterprise {
