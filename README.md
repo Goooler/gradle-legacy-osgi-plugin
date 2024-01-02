@@ -1,5 +1,7 @@
 ## A replacement for deprecated Gradle 5 osgi plugin
-[![Download](https://img.shields.io/gradle-plugin-portal/v/io.github.goooler.osgi)](https://plugins.gradle.org/plugin/io.github.goooler.osgi)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.goooler.osgi/gradle-legacy-osgi-plugin)](https://central.sonatype.com/artifact/io.github.goooler.osgi/gradle-legacy-osgi-plugin)
+[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/io.github.goooler.osgi/gradle-legacy-osgi-plugin?&server=https://s01.oss.sonatype.org/)](https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/goooler/osgi/gradle-legacy-osgi-plugin)
+[![Plugin Portal](https://img.shields.io/gradle-plugin-portal/v/io.github.goooler.osgi)](https://plugins.gradle.org/plugin/io.github.goooler.osgi)
 [![Main](https://github.com/Goooler/gradle-legacy-osgi-plugin/actions/workflows/main.yml/badge.svg?branch=trunk&event=push)](https://github.com/Goooler/gradle-legacy-osgi-plugin/actions/workflows/main.yml)
 [![License](https://img.shields.io/github/license/Goooler/gradle-legacy-osgi-plugin.svg)](LICENSE)
 
