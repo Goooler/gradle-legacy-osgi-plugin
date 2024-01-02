@@ -7,7 +7,7 @@ plugins {
     id("com.vanniktech.maven.publish") version "0.26.0"
 }
 
-group = "io.github.goooler"
+group = "io.github.goooler.osgi"
 version = "0.8.2-SNAPSHOT"
 
 java {
@@ -32,7 +32,7 @@ gradlePlugin {
 
     plugins {
         create("osgiPlugin") {
-            id = "io.github.goooler.osgi"
+            id = group.toString()
             implementationClass = "com.github.blindpirate.osgi.plugins.osgi.OsgiPlugin"
             displayName = "A legacy osgi plugin in Gradle 5"
             description = "A fork of https://github.com/blindpirate/gradle-legacy-osgi-plugin"
@@ -42,7 +42,7 @@ gradlePlugin {
 }
 
 mavenPublishing {
-    coordinates("io.github.goooler.osgi", "gradle-legacy-osgi-plugin", version.toString())
+    coordinates(group.toString(), "gradle-legacy-osgi-plugin", version.toString())
     pom {
         name = "A legacy osgi plugin in Gradle 5"
         description = "A fork of https://github.com/blindpirate/gradle-legacy-osgi-plugin"
