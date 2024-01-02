@@ -24,8 +24,8 @@ dependencies {
 }
 
 gradlePlugin {
-    website.set("https://github.com/Goooler/gradle-legacy-osgi-plugin")
-    vcsUrl.set("https://github.com/Goooler/gradle-legacy-osgi-plugin")
+    website = "https://github.com/Goooler/gradle-legacy-osgi-plugin"
+    vcsUrl = "https://github.com/Goooler/gradle-legacy-osgi-plugin"
 
     plugins {
         create("osgiPlugin") {
@@ -33,7 +33,7 @@ gradlePlugin {
             implementationClass = "com.github.blindpirate.osgi.plugins.osgi.OsgiPlugin"
             displayName = "A legacy osgi plugin in Gradle 5"
             description = "A fork of https://github.com/blindpirate/gradle-legacy-osgi-plugin"
-            tags.set(listOf("legacy", "osgi"))
+            tags = listOf("legacy", "osgi")
         }
     }
 }
