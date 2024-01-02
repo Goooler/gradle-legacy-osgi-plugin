@@ -7,8 +7,8 @@ plugins {
     id("com.vanniktech.maven.publish") version "0.26.0"
 }
 
-group = "io.github.goooler.osgi"
-version = "0.8.3-SNAPSHOT"
+group = providers.gradleProperty("GROUP").orNull.orEmpty()
+version = providers.gradleProperty("VERSION_NAME").orNull.orEmpty()
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(8)
@@ -27,47 +27,21 @@ dependencies {
 }
 
 gradlePlugin {
-    website = "https://github.com/Goooler/gradle-legacy-osgi-plugin"
-    vcsUrl = "https://github.com/Goooler/gradle-legacy-osgi-plugin"
+    website = providers.gradleProperty("POM_URL")
+    vcsUrl = providers.gradleProperty("POM_URL")
 
     plugins {
         create("osgiPlugin") {
             id = group.toString()
             implementationClass = "com.github.blindpirate.osgi.plugins.osgi.OsgiPlugin"
-            displayName = "A legacy osgi plugin in Gradle 5"
-            description = "A fork of https://github.com/blindpirate/gradle-legacy-osgi-plugin"
+            displayName = providers.gradleProperty("POM_NAME").orNull
+            description = providers.gradleProperty("POM_DESCRIPTION").orNull
             tags = listOf("legacy", "osgi")
         }
     }
 }
 
 mavenPublishing {
-    coordinates(group.toString(), "gradle-legacy-osgi-plugin", version.toString())
-    pom {
-        name = "A legacy osgi plugin in Gradle 5"
-        description = "A fork of https://github.com/blindpirate/gradle-legacy-osgi-plugin"
-        inceptionYear = "2023"
-        url = "https://github.com/Goooler/gradle-legacy-osgi-plugin/"
-        licenses {
-            license {
-                name = "The Apache License, Version 2.0"
-                url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
-                distribution = "https://www.apache.org/licenses/LICENSE-2.0.txt"
-            }
-        }
-        developers {
-            developer {
-                id = "Goooler"
-                name = "Zongle Wang"
-                url = "https://github.com/Goooler"
-            }
-        }
-        scm {
-            url = "https://github.com/Goooler/gradle-legacy-osgi-plugin/"
-            connection = "scm:git:git://github.com/Goooler/gradle-legacy-osgi-plugin.git"
-            developerConnection = "scm:git:ssh://git@github.com/Goooler/gradle-legacy-osgi-plugin.git"
-        }
-    }
     publishToMavenCentral(SonatypeHost.S01)
     signAllPublications()
 }
