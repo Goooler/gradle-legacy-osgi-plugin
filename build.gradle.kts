@@ -41,11 +41,6 @@ gradlePlugin {
     }
 }
 
-mavenPublishing {
-    publishToMavenCentral(SonatypeHost.S01)
-    signAllPublications()
-}
-
 tasks.publishPlugins {
     notCompatibleWithConfigurationCache("https://github.com/gradle/gradle/issues/21283")
 
