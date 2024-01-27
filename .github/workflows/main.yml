@@ -22,7 +22,7 @@ jobs:
           distribution: 'zulu'
           java-version: 17
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v3
       - name: Execute Gradle build
         run: ./gradlew build
 
@@ -37,7 +37,7 @@ jobs:
           distribution: 'zulu'
           java-version: 17
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v3
       - name: Execute Gradle publish
         # Disable CC due to https://github.com/gradle/gradle/issues/22779
         run: ./gradlew publish --no-configuration-cache
