@@ -3,7 +3,7 @@ plugins {
     id("groovy")
     id("com.gradle.plugin-publish") version "1.2.1"
     id("io.github.gradle-nexus.publish-plugin") version "2.0.0-rc-1"
-    id("signing")
+    signing
 }
 
 group = providers.gradleProperty("GROUP").get()
@@ -53,18 +53,10 @@ nexusPublishing {
 
 publishing {
     publications {
-        // Not needed, because we have one publication now from the java component: pluginMaven.
-        // Not needed, because publishing sets up signing.
-        //whenObjectAdded {
-        //    // TODO: delete workaround for https://github.com/gradle/gradle/issues/26091 once fixed.
-        //    tasks.named("publish${this.name.replaceFirstChar(Char::uppercaseChar)}PublicationToMavenLocal").configure {
-        //        //dependsOn(tasks.withType<Sign>())
-        //    }
-        //}
-        // Pre-configure metadata for org.gradle.plugin.devel.plugins.MavenPluginPublishPlugin's publication.
+        /**
+         * Pre-configure metadata for [org.gradle.plugin.devel.plugins.MavenPluginPublishPlugin]'s publication.
+         */
         create<MavenPublication>("pluginMaven") {
-            // Not needed, automatic in MPPP.
-            //from(components["java"])
             artifactId = providers.gradleProperty("POM_ARTIFACT_ID").get()
             pom {
                 name = providers.gradleProperty("POM_NAME")
@@ -95,21 +87,7 @@ publishing {
 
 signing {
     isRequired = !version.toString().endsWith("-SNAPSHOT")
-    // Used it for testing signing:
-    //useInMemoryPgpKeys(
-    //    // key is `gpg --full-generate-key` + `gpg --armor --export-secret-key <key-id>` on a single line,
-    //    // I usually use ORG_GRADLE_PROJECT_signingKey env var to set this, not -P.
-    //    project.findProperty("signingKey")?.toString(),
-    //    project.findProperty("signingPassword")?.toString()
-    //)
 }
-
-// Not needed, because we have one publication now from the java component: pluginMaven.
-// Not needed, because publishing sets up signing.
-// TODO: delete workaround for https://github.com/gradle/gradle/issues/26091 once fixed.
-//tasks.withType<PublishToMavenRepository>().configureEach {
-//   // dependsOn(tasks.withType<Sign>())
-//}
 
 tasks.publishPlugins {
     notCompatibleWithConfigurationCache("https://github.com/gradle/gradle/issues/21283")
