@@ -20,7 +20,7 @@ dependencies {
 
     testImplementation("org.spockframework:spock-core:2.3-groovy-3.0")
     testImplementation("net.bytebuddy:byte-buddy:1.14.11")
-    testImplementation(platform("org.junit:junit-bom:5.10.1"))
+    testImplementation(platform("org.junit:junit-bom:5.10.2"))
     testImplementation("org.junit.vintage:junit-vintage-engine")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
