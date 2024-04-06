@@ -2,7 +2,7 @@ plugins {
     id("java-library")
     id("groovy")
     id("com.gradle.plugin-publish") version "1.2.1"
-    id("io.github.gradle-nexus.publish-plugin") version "2.0.0-rc-2"
+    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
     signing
 }
 
