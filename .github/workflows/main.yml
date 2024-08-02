@@ -1,12 +1,10 @@
 name: Main
 
 on:
-  pull_request:
-    branches:
-      - trunk
   push:
     branches:
       - trunk
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -21,12 +19,13 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 17
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-      - name: Execute Gradle build
-        run: ./gradlew build
+      - uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-home-cache-cleanup: true
+          validate-wrappers: true
+      - run: ./gradlew build
 
-  publish:
+  publish-snapshot:
     needs: build
     runs-on: ubuntu-latest
     if: github.repository == 'Goooler/gradle-legacy-osgi-plugin' && github.ref == 'refs/heads/trunk'
@@ -36,13 +35,11 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 17
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-      - name: Execute Gradle publish
-        # Disable CC due to https://github.com/gradle/gradle/issues/22779
-        run: ./gradlew publish --no-configuration-cache
+      - uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: true
+      # Disable CC due to https://github.com/gradle/gradle/issues/22779
+      - run: ./gradlew publish --no-configuration-cache
         env:
-          ORG_GRADLE_PROJECT_gradle.publish.key: ${{ secrets.GRADLE_PUBLISH_KEY }}
-          ORG_GRADLE_PROJECT_gradle.publish.secret: ${{ secrets.GRADLE_PUBLISH_SECRET }}
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}

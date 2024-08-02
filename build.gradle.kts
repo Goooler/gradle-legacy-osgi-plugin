@@ -2,12 +2,11 @@ plugins {
     id("java-library")
     id("groovy")
     id("com.gradle.plugin-publish") version "1.2.1"
-    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
-    signing
+    id("com.vanniktech.maven.publish") version "0.29.0"
 }
 
-group = providers.gradleProperty("GROUP").get()
-version = providers.gradleProperty("VERSION_NAME").get()
+group = providers.gradleProperty("GROUP").orNull.orEmpty()
+version = providers.gradleProperty("VERSION_NAME").orNull.orEmpty()
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(8)
@@ -38,55 +37,6 @@ gradlePlugin {
             tags = listOf("legacy", "osgi")
         }
     }
-}
-
-nexusPublishing {
-    repositories {
-        sonatype {
-            nexusUrl = uri("https://s01.oss.sonatype.org/service/local/")
-            snapshotRepositoryUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-            username = providers.gradleProperty("mavenCentralUsername")
-            password = providers.gradleProperty("mavenCentralPassword")
-        }
-    }
-}
-
-publishing {
-    publications {
-        /**
-         * Pre-configure metadata for [org.gradle.plugin.devel.plugins.MavenPluginPublishPlugin]'s publication.
-         */
-        create<MavenPublication>("pluginMaven") {
-            artifactId = providers.gradleProperty("POM_ARTIFACT_ID").get()
-            pom {
-                name = providers.gradleProperty("POM_NAME")
-                description = providers.gradleProperty("POM_DESCRIPTION")
-                url = providers.gradleProperty("POM_URL")
-                licenses {
-                    license {
-                        name = providers.gradleProperty("POM_LICENSE_NAME")
-                        url = providers.gradleProperty("POM_LICENSE_URL")
-                    }
-                }
-                developers {
-                    developer {
-                        id = providers.gradleProperty("POM_DEVELOPER_ID")
-                        name = providers.gradleProperty("POM_DEVELOPER_NAME")
-                        url = providers.gradleProperty("POM_DEVELOPER_URL")
-                    }
-                }
-                scm {
-                    connection = providers.gradleProperty("POM_SCM_CONNECTION")
-                    developerConnection = providers.gradleProperty("POM_SCM_DEV_CONNECTION")
-                    url = providers.gradleProperty("POM_SCM_URL")
-                }
-            }
-        }
-    }
-}
-
-signing {
-    isRequired = !version.toString().endsWith("-SNAPSHOT")
 }
 
 tasks.publishPlugins {
