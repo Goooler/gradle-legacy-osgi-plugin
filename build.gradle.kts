@@ -5,8 +5,8 @@ plugins {
     id("com.vanniktech.maven.publish") version "0.29.0"
 }
 
-group = providers.gradleProperty("GROUP").orNull.orEmpty()
-version = providers.gradleProperty("VERSION_NAME").orNull.orEmpty()
+group = providers.gradleProperty("GROUP").get()
+version = providers.gradleProperty("VERSION_NAME").get()
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(8)
@@ -32,8 +32,8 @@ gradlePlugin {
         create("osgiPlugin") {
             id = group.toString()
             implementationClass = "com.github.blindpirate.osgi.plugins.osgi.OsgiPlugin"
-            displayName = providers.gradleProperty("POM_NAME").orNull
-            description = providers.gradleProperty("POM_DESCRIPTION").orNull
+            displayName = providers.gradleProperty("POM_NAME").get()
+            description = providers.gradleProperty("POM_DESCRIPTION").get()
             tags = listOf("legacy", "osgi")
         }
     }
