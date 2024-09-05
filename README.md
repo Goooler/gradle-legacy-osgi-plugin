@@ -17,6 +17,6 @@ this is a fork of [blindpirate/gradle-legacy-osgi-plugin](https://github.com/bli
 Just replace the original `apply plugin: 'osgi'` with `apply plugin: 'io.github.goooler.osgi'`, or
 ```kotlin
 plugins {
-    id("io.github.goooler.osgi") version "0.8.4"
+    id("io.github.goooler.osgi") version "0.8.5"
 }
 ```
