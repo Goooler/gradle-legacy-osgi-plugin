@@ -2,7 +2,7 @@ plugins {
     id("java-library")
     id("groovy")
     id("com.gradle.plugin-publish") version "1.3.0"
-    id("com.vanniktech.maven.publish") version "0.29.0"
+    id("com.vanniktech.maven.publish") version "0.30.0"
 }
 
 group = providers.gradleProperty("GROUP").get()
