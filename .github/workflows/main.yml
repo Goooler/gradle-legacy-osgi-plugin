@@ -1,10 +1,12 @@
 name: Main
 
 on:
-  pull_request:
   push:
     branches:
-      - master
+      - trunk
+  pull_request:
+    branches:
+      - trunk
   workflow_dispatch:
 
 jobs:
@@ -19,7 +21,5 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 17
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-      - name: Execute Gradle build
-        run: ./gradlew build
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew build
