@@ -38,12 +38,6 @@ gradlePlugin {
     }
 }
 
-tasks.publishPlugins {
-    notCompatibleWithConfigurationCache("https://github.com/gradle/gradle/issues/21283")
-
-    dependsOn(tasks.check)
-}
-
 tasks.test {
     useJUnitPlatform()
 }
